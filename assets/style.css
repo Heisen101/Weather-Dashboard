@@ -1,0 +1,11 @@
+#search-input {
+  border-radius: 10px;
+  border: solid 1px;
+  height: 55px;
+  width: 250px;
+}
+#search-button {
+  height: 40px;
+  width: 250px;
+  border-radius: 10px;
+}
