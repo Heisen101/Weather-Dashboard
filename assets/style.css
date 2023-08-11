@@ -9,3 +9,6 @@
   width: 250px;
   border-radius: 10px;
 }
+.card {
+  background-color: rgba(43, 43, 128, 0.735);
+}
