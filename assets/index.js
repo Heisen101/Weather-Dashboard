@@ -7,9 +7,10 @@ var forecastFive = $("#forecast");
 var apiKey = "d312684dbe502497c563af0a35330883";
 var units = "metric";
 var limit = 5;
+var lat, lon;
+
 //code for API+ url + search +geolocation
-var WheatherDays = `http://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=${apiKey}`;
-console.log(WheatherDays);
+
 function LongLat(CityName) {
   // will show the city wheather
   let coordinatesUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${CityName}&limit=5&appid=${apiKey}`;
@@ -23,6 +24,7 @@ function LongLat(CityName) {
       }
       var lat = coorditanates[0].lat; //will store the lat data by accesing the first city in api object
       var lon = coorditanates[0].lon; //will store the long data by accesing the first city in api object
+      WheatherFiveDays(lat, lon);
       localStorage.setItem(CityName, JSON.stringify(coorditanates));
     })
     .catch((error) => {
@@ -35,9 +37,13 @@ $("#search-form").submit(function (event) {
   var CityName = inputSearch.val();
   LongLat(CityName);
 });
-// function for fetching data for next 5 days using lat and long from LongLat function
+console.log(lat, lon);
 
-function WheatherFiveDays(lat, lon) {}
+// function for fetching data for next 5 days using lat and long from LongLat function
+function WheatherFiveDays(lat, lon) {
+  var WheatherDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+  console.log(WheatherDays);
+}
 
 //function for buttons to search arrea and created buttons saved in local storage
 
