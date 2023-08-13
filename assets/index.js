@@ -50,12 +50,22 @@ function WheatherFiveDays(lat, lon) {
     })
     .then(function (data) {
       console.log(data);
-      //will show today wheather on ain card
+      //will show today wheather on main card
       var forecastDisplay = false;
       function forecastWheather() {
+        //extract whether from api, pushe in an array of nested arrays, then used to create html elements to display data in html
+        var extractedWheather = [];
         if (forecastDisplay) {
           return;
         }
+        for (let i = 0; i < 5; i++) {
+          var whetherDay = data.list[i];
+          var date = new Date(whetherDay.dt_txt);
+          var formatDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+            .toString()
+            .padStart(2, "0")}-${date.getDay().toString().padStart(2, "0")}`;
+        }
+
         var div = $("<div>")
           .addClass("card mx-3 my-3")
           .css({ width: "16rem", height: "180px" });
