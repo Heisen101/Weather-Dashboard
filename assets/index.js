@@ -81,9 +81,16 @@ function WheatherFiveDays(lat, lon) {
         var wind = "Wind: " + data.list[0].wind.speed + " KPH";
         var humidity = "Humidity: " + data.list[0].main.humidity + "%";
         ArrayList.push(temperature, wind, humidity);
+
         console.log(temperature);
         divToday.append(todayH2);
         todayArea.append(divToday);
+        for (let i = 0; i < ArrayList.length; i++) {
+          var unlistedList = $("<ul>");
+          var listedL = $("<li>").text(ArrayList[i]);
+          unlistedList.append(listedL);
+          divToday.append(unlistedList);
+        }
         weatherDisplayed = true; //this makes above condition to be true
         console.log(ArrayList);
       }
