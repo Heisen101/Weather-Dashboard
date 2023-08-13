@@ -58,19 +58,48 @@ function WheatherFiveDays(lat, lon) {
         // if (forecastDisplay) {
         //   return;
         // }
-        for (let i = 0; i < 5; i++) {
-          var whetherDay = data.list[i];
-          var date = new Date(whetherDay.dt_txt);
+        var checkRightDay = {}; //created an object
+        for (let i = 0; i < data.list.length; i++) {
+          var wheatherD = data.list[i];
+          var date = new Date(wheatherD.dt_txt);
+          var day = date.getDate(); //take date day from data object
+          if (!checkRightDay[day]) {
+            //cheks if day with that date is created in object than will not create it, if wasn't then will create one
+            checkRightDay[day] = [];
+          }
+          checkRightDay[day].push(wheatherD);
+        }
+        //extracts wheather based on the day,
+        for (const day in checkRightDay) {
+          var dailyWeather = checkRightDay[day];
+          var firstWeatherOfDay = dailyWeather[0];
+          var date = new Date(firstWeatherOfDay.dt_txt);
           var formatDate = `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
-            .padStart(2, "0")}-${date.getDay().toString().padStart(2, "0")}`;
+            .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 
-          var humidity = whetherDay.main.humidity + " %";
+          var humidity = firstWeatherOfDay.main.humidity + " %";
           var temperature =
-            (whetherDay.main.temp + zeroKelvin).toFixed(1) + "°C";
-          var windSpeed = whetherDay.wind.speed + "MPH";
+            (firstWeatherOfDay.main.temp + zeroKelvin).toFixed(1) + "°C";
+          var windSpeed = firstWeatherOfDay.wind.speed + " KPH";
+
           var nestedArray = [formatDate, humidity, temperature, windSpeed];
           extractedWheather.push(nestedArray);
+        }
+        console.log(extractedWheather);
+
+        for (let i = 0; i < extractedWheather.length; i++) {
+          var dayData = extractedWheather[i];
+          var div = $("<div>")
+            .addClass("card mx-3 my-3")
+            .css({ width: "16rem", height: "180px" });
+          var cardBody = $("<div>").addClass("card-body");
+          cardBody.append($("<p>").text("Date: " + dayData[0]));
+          cardBody.append($("<p>").text("Humidity: " + dayData[1]));
+          cardBody.append($("<p>").text("Temperature: " + dayData[2]));
+          cardBody.append($("<p>").text("Wind Speed: " + dayData[3]));
+          div.append(cardBody);
+          forecastFive.append(div);
         }
         console.log(extractedWheather);
       }
