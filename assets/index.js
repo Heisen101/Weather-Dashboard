@@ -50,10 +50,11 @@ function WheatherFiveDays(lat, lon) {
     })
     .then(function (data) {
       console.log(data);
-      //will show today wheather on main card
+
       //   var forecastDisplay = false;
+      //extract whether from api, pushe in an array of nested arrays, then used to create html elements to display data in html
+
       function forecastWheather() {
-        //extract whether from api, pushe in an array of nested arrays, then used to create html elements to display data in html
         var extractedWheather = [];
         // if (forecastDisplay) {
         //   return;
@@ -86,13 +87,15 @@ function WheatherFiveDays(lat, lon) {
           var nestedArray = [formatDate, humidity, temperature, windSpeed];
           extractedWheather.push(nestedArray);
         }
-        console.log(extractedWheather);
 
         for (let i = 0; i < extractedWheather.length; i++) {
           var dayData = extractedWheather[i];
-          var div = $("<div>")
-            .addClass("card mx-3 my-3")
-            .css({ width: "18rem", height: "200px" });
+          var div = $("<div>").addClass("card mx-3 my-3").css({
+            width: "18rem",
+            height: "200px",
+            color: "white",
+            border: "solid 2px grey",
+          });
           var iconCode = data.list[i].weather[0].icon;
           console.log(iconCode);
           var iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
@@ -100,11 +103,14 @@ function WheatherFiveDays(lat, lon) {
           var iconImg = $("<img>")
             .attr("src", iconUrl)
             .addClass("weather-icon");
-          var h4 = $("<h5>").text("Date: " + dayData[0]);
-          h4.append(iconImg);
 
+          //html elements created based on information stored in array
           var cardBody = $("<div>").addClass("card-body");
-          //   cardBody.append($("<p>").text("Date: " + dayData[0]));
+
+          var h4 = $("<h5>")
+            .css({ color: "antiquewhite" })
+            .text("Date: " + dayData[0]);
+          h4.append(iconImg);
           cardBody.append(h4);
           cardBody.append($("<p>").text("Humidity: " + dayData[1]));
           cardBody.append($("<p>").text("Temperature: " + dayData[2]));
@@ -114,7 +120,11 @@ function WheatherFiveDays(lat, lon) {
         }
         console.log(extractedWheather);
       }
+
       forecastWheather();
+      // ------------------------------------------
+
+      //today wheather displays on main card
       function todayWheather() {
         if (weatherDisplayed) {
           return; //will check if wheather was displayed and if yes, lower code will not be executed
@@ -152,7 +162,7 @@ function WheatherFiveDays(lat, lon) {
 
         var iconImg = $("<img>").attr("src", iconUrl).addClass("weather-icon");
         todayH2.append(iconImg);
-        // console.log(temperature);
+
         divToday.append(todayH2);
         todayArea.append(divToday);
         // For loop to iterate through created array that stores data of humidity, temp and wind, and will create li to be displayed inside todays area
@@ -166,12 +176,6 @@ function WheatherFiveDays(lat, lon) {
         console.log(ArrayList);
       }
       todayWheather();
-
-      //   console.log(data.list[0].main.temp);
-      //   data.list[0].forEach(function (entry) {
-      //     var temperature = entry.main.temp;
-      //     console.log(temperature);
-      //   });
     });
 }
 
@@ -188,6 +192,3 @@ function searchHistory() {
   buttonHistory.append(div);
 }
 searchButton.on("click", searchHistory);
-//function for displaing todays wheather
-
-//function for displaying five days forecast wheather and ellemnts creat
