@@ -183,12 +183,10 @@ function WheatherFiveDays(lat, lon) {
 
 function searchHistory() {
   var button = $("<button>")
-    .addClass("btn btn-secondary  my-3")
+    .addClass("btn btn-secondary  my-2")
     .css({ height: "40px", width: "250px", borderRadius: "10px" })
     .text(inputSearch.val());
 
-  var div = $("<div>").addClass(" mx-3 my-3").css({});
-  div.append(button);
-  buttonHistory.append(div);
+  buttonHistory.append(button);
 }
 searchButton.on("click", searchHistory);
