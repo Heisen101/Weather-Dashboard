@@ -37,8 +37,8 @@ $("#search-form").submit(function (event) {
   var CityName = inputSearch.val();
   LongLat(CityName);
 });
-console.log(lat, lon);
 
+var weatherDisplayed = false; // this will make the main card on top to be displayed once only
 // function for fetching data for next 5 days using lat and long from LongLat function
 function WheatherFiveDays(lat, lon) {
   var WheatherDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
@@ -50,9 +50,15 @@ function WheatherFiveDays(lat, lon) {
     .then(function (data) {
       console.log(data);
       //will show today wheather on ain card
+
       function todayWheather() {
+        if (weatherDisplayed) {
+          return; //will check if wheather was displayed and if yes, lower code will not be executed
+        }
         var dataToday = data.list[0].dt_txt; //gets todays date from api
         var date = new Date(dataToday); //formats the data in new format
+        var city = data.city.name;
+        console.log(city);
 
         // Format the date as needed (e.g., "YYYY-MM-DD"), will extract from new data only year, month and day
         var formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -62,14 +68,16 @@ function WheatherFiveDays(lat, lon) {
         var divToday = $("<div>")
           .addClass("mx-3 my-3")
           .css({ height: "180px", width: "850px", border: "solid 1px" });
-        var todayH2 = $("<h2>")
+        var todayH2 = $("<h3>")
           .addClass("text-start mx-3")
           .css({ fontWeight: "bold" })
-          .text(formattedDate);
+          .text(city + ":" + " " + formattedDate);
         divToday.append(todayH2);
         todayArea.append(divToday);
+        weatherDisplayed = true; //this makes above condition to be true
       }
       todayWheather();
+
       //   console.log(data.list[0].main.temp);
       //   data.list[0].forEach(function (entry) {
       //     var temperature = entry.main.temp;
