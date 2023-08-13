@@ -8,6 +8,7 @@ var apiKey = "d312684dbe502497c563af0a35330883";
 var units = "metric";
 var limit = 5;
 var lat, lon;
+var zeroKelvin = -273.15;
 
 //code for API+ url + search +geolocation
 
@@ -59,6 +60,7 @@ function WheatherFiveDays(lat, lon) {
         var date = new Date(dataToday); //formats the data in new format
         var city = data.city.name;
         console.log(city);
+        var ArrayList = [];
 
         // Format the date as needed (e.g., "YYYY-MM-DD"), will extract from new data only year, month and day
         var formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -72,6 +74,9 @@ function WheatherFiveDays(lat, lon) {
           .addClass("text-start mx-3")
           .css({ fontWeight: "bold" })
           .text(city + ":" + " " + formattedDate);
+        var temperature =
+          (data.list[0].main.temp + zeroKelvin).toFixed(1) + "°C";
+        console.log(temperature);
         divToday.append(todayH2);
         todayArea.append(divToday);
         weatherDisplayed = true; //this makes above condition to be true
