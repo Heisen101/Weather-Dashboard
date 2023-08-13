@@ -92,9 +92,20 @@ function WheatherFiveDays(lat, lon) {
           var dayData = extractedWheather[i];
           var div = $("<div>")
             .addClass("card mx-3 my-3")
-            .css({ width: "16rem", height: "180px" });
+            .css({ width: "18rem", height: "200px" });
+          var iconCode = data.list[i].weather[0].icon;
+          console.log(iconCode);
+          var iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
+
+          var iconImg = $("<img>")
+            .attr("src", iconUrl)
+            .addClass("weather-icon");
+          var h4 = $("<h5>").text("Date: " + dayData[0]);
+          h4.append(iconImg);
+
           var cardBody = $("<div>").addClass("card-body");
-          cardBody.append($("<p>").text("Date: " + dayData[0]));
+          //   cardBody.append($("<p>").text("Date: " + dayData[0]));
+          cardBody.append(h4);
           cardBody.append($("<p>").text("Humidity: " + dayData[1]));
           cardBody.append($("<p>").text("Temperature: " + dayData[2]));
           cardBody.append($("<p>").text("Wind Speed: " + dayData[3]));
