@@ -49,9 +49,30 @@ function WheatherFiveDays(lat, lon) {
     })
     .then(function (data) {
       console.log(data);
-      console.log(data.list[0].dt_txt);
-      //   data.list.forEach(function (entry) {
-      //     var temperature = entry.main;
+      //will show today wheather on ain card
+      function todayWheather() {
+        var dataToday = data.list[0].dt_txt; //gets todays date from api
+        var date = new Date(dataToday); //formats the data in new format
+
+        // Format the date as needed (e.g., "YYYY-MM-DD"), will extract from new data only year, month and day
+        var formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+        console.log(formattedDate);
+        var divToday = $("<div>")
+          .addClass("mx-3 my-3")
+          .css({ height: "180px", width: "850px", border: "solid 1px" });
+        var todayH2 = $("<h2>")
+          .addClass("text-start mx-3")
+          .css({ fontWeight: "bold" })
+          .text(formattedDate);
+        divToday.append(todayH2);
+        todayArea.append(divToday);
+      }
+      todayWheather();
+      //   console.log(data.list[0].main.temp);
+      //   data.list[0].forEach(function (entry) {
+      //     var temperature = entry.main.temp;
       //     console.log(temperature);
       //   });
     });
@@ -61,7 +82,7 @@ function WheatherFiveDays(lat, lon) {
 
 function searchHistory() {
   var button = $("<button>")
-    .addClass("btn btn-secondary  my-2")
+    .addClass("btn btn-secondary  my-3")
     .css({ height: "40px", width: "250px", borderRadius: "10px" })
     .text(inputSearch.val());
 
