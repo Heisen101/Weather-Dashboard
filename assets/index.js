@@ -51,7 +51,20 @@ function WheatherFiveDays(lat, lon) {
     .then(function (data) {
       console.log(data);
       //will show today wheather on ain card
-
+      var forecastDisplay = false;
+      function forecastWheather() {
+        if (forecastDisplay) {
+          return;
+        }
+        var div = $("<div>")
+          .addClass("card mx-3 my-3")
+          .css({ width: "16rem", height: "180px" });
+        var cardBody = $("<div>").addClass("card-body");
+        div.append(cardBody);
+        forecastFive.append(div);
+        forecastDisplay = true;
+      }
+      forecastFive;
       function todayWheather() {
         if (weatherDisplayed) {
           return; //will check if wheather was displayed and if yes, lower code will not be executed
@@ -88,9 +101,9 @@ function WheatherFiveDays(lat, lon) {
         var iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
 
         var iconImg = $("<img>").attr("src", iconUrl).addClass("weather-icon");
-            todayH2.append(iconImg)
+        todayH2.append(iconImg);
         // console.log(temperature);
-        divToday.append(todayH2, );
+        divToday.append(todayH2);
         todayArea.append(divToday);
         // For loop to iterate through created array that stores data of humidity, temp and wind, and will create li to be displayed inside todays area
         for (let i = 0; i < ArrayList.length; i++) {
