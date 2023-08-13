@@ -51,30 +51,30 @@ function WheatherFiveDays(lat, lon) {
     .then(function (data) {
       console.log(data);
       //will show today wheather on main card
-      var forecastDisplay = false;
+      //   var forecastDisplay = false;
       function forecastWheather() {
         //extract whether from api, pushe in an array of nested arrays, then used to create html elements to display data in html
         var extractedWheather = [];
-        if (forecastDisplay) {
-          return;
-        }
+        // if (forecastDisplay) {
+        //   return;
+        // }
         for (let i = 0; i < 5; i++) {
           var whetherDay = data.list[i];
           var date = new Date(whetherDay.dt_txt);
           var formatDate = `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, "0")}-${date.getDay().toString().padStart(2, "0")}`;
-        }
 
-        var div = $("<div>")
-          .addClass("card mx-3 my-3")
-          .css({ width: "16rem", height: "180px" });
-        var cardBody = $("<div>").addClass("card-body");
-        div.append(cardBody);
-        forecastFive.append(div);
-        forecastDisplay = true;
+          var humidity = whetherDay.main.humidity + " %";
+          var temperature =
+            (whetherDay.main.temp + zeroKelvin).toFixed(1) + "°C";
+          var windSpeed = whetherDay.wind.speed + "MPH";
+          var nestedArray = [formatDate, humidity, temperature, windSpeed];
+          extractedWheather.push(nestedArray);
+        }
+        console.log(extractedWheather);
       }
-      forecastFive;
+      forecastWheather();
       function todayWheather() {
         if (weatherDisplayed) {
           return; //will check if wheather was displayed and if yes, lower code will not be executed
