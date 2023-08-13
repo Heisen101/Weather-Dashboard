@@ -42,7 +42,19 @@ console.log(lat, lon);
 // function for fetching data for next 5 days using lat and long from LongLat function
 function WheatherFiveDays(lat, lon) {
   var WheatherDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-  console.log(WheatherDays);
+  //   console.log(WheatherDays);
+  fetch(WheatherDays)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      console.log(data.list[0].dt_txt);
+      //   data.list.forEach(function (entry) {
+      //     var temperature = entry.main;
+      //     console.log(temperature);
+      //   });
+    });
 }
 
 //function for buttons to search arrea and created buttons saved in local storage
