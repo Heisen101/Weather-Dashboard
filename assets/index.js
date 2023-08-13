@@ -75,11 +75,17 @@ function WheatherFiveDays(lat, lon) {
           .css({ fontWeight: "bold" })
           .text(city + ":" + " " + formattedDate);
         var temperature =
-          (data.list[0].main.temp + zeroKelvin).toFixed(1) + "°C";
+          "Temperature: " +
+          (data.list[0].main.temp + zeroKelvin).toFixed(1) +
+          "°C";
+        var wind = "Wind: " + data.list[0].wind.speed + " KPH";
+        var humidity = "Humidity: " + data.list[0].main.humidity + "%";
+        ArrayList.push(temperature, wind, humidity);
         console.log(temperature);
         divToday.append(todayH2);
         todayArea.append(divToday);
         weatherDisplayed = true; //this makes above condition to be true
+        console.log(ArrayList);
       }
       todayWheather();
 
