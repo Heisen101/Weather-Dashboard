@@ -69,7 +69,7 @@ function WheatherFiveDays(lat, lon) {
         console.log(formattedDate);
         var divToday = $("<div>")
           .addClass("mx-3 my-3")
-          .css({ height: "180px", width: "850px", border: "solid 1px" });
+          .css({ height: "220px", width: "850px", border: "solid 1px" });
         var todayH2 = $("<h3>")
           .addClass("text-start mx-3")
           .css({ fontWeight: "bold" })
@@ -78,13 +78,21 @@ function WheatherFiveDays(lat, lon) {
           "Temperature: " +
           (data.list[0].main.temp + zeroKelvin).toFixed(1) +
           "°C";
-        var wind = "Wind: " + data.list[0].wind.speed + " KPH";
+        var wind = "Wind: " + data.list[0].wind.speed + " MPH";
         var humidity = "Humidity: " + data.list[0].main.humidity + "%";
         ArrayList.push(temperature, wind, humidity);
 
-        console.log(temperature);
-        divToday.append(todayH2);
+        // Create and append the weather icon image
+        var iconCode = data.list[0].weather[0].icon;
+        console.log(iconCode);
+        var iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
+
+        var iconImg = $("<img>").attr("src", iconUrl).addClass("weather-icon");
+            todayH2.append(iconImg)
+        // console.log(temperature);
+        divToday.append(todayH2, );
         todayArea.append(divToday);
+        // For loop to iterate through created array that stores data of humidity, temp and wind, and will create li to be displayed inside todays area
         for (let i = 0; i < ArrayList.length; i++) {
           var unlistedList = $("<ul>");
           var listedL = $("<li>").text(ArrayList[i]);
