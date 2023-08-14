@@ -56,9 +56,7 @@ function WheatherFiveDays(lat, lon) {
 
       function forecastWheather(city) {
         var extractedWheather = [];
-        // if (forecastDisplay) {
-        //   return;
-        // }
+
         var checkRightDay = {}; //created an object
         for (let i = 0; i < data.list.length; i++) {
           var wheatherD = data.list[i];
@@ -88,7 +86,9 @@ function WheatherFiveDays(lat, lon) {
           extractedWheather.push(nestedArray);
         }
         var slicedWheather = extractedWheather.slice(1);
-        var h5 = $("<h4>").css({ fontWeight: "bold", marginLeft:"20px" }).text("5-Day Forecast:");
+        var h5 = $("<h4>")
+          .css({ fontWeight: "bold", marginLeft: "20px" })
+          .text("5-Day Forecast: " + $(inputSearch).val().toUpperCase());
         forecastFive.append(h5);
         for (let i = 0; i < slicedWheather.length; i++) {
           var dayData = slicedWheather[i];
@@ -124,25 +124,26 @@ function WheatherFiveDays(lat, lon) {
         localStorage.setItem(city, JSON.stringify(slicedWheather));
       }
 
-      forecastWheather();
+      forecastWheather(data.city.name);
+
       // ------------------------------------------
 
       //today wheather displays on main card
-      function todayWheather() {
+      function todayWheather(data) {
         if (weatherDisplayed) {
           return; //will check if wheather was displayed and if yes, lower code will not be executed
         }
         var dataToday = data.list[0].dt_txt; //gets todays date from api
         var date = new Date(dataToday); //formats the data in new format
         var city = data.city.name;
-        console.log(city);
+
         var ArrayList = [];
 
         // Format the date as needed (e.g., "YYYY-MM-DD"), will extract from new data only year, month and day
         var formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
           .toString()
           .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-        console.log(formattedDate);
+
         var divToday = $("<div>")
           .addClass("mx-3 my-3")
           .css({ height: "220px", width: "850px", border: "solid 1px" });
@@ -176,9 +177,10 @@ function WheatherFiveDays(lat, lon) {
           divToday.append(unlistedList);
         }
         weatherDisplayed = true; //this makes above condition to be true
-        console.log(ArrayList);
       }
-      todayWheather();
+      todayWheather(data);
+
+      ///new data to be displayed
     });
 }
 
