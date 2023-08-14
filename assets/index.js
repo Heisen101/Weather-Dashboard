@@ -26,7 +26,7 @@ function LongLat(CityName) {
       var lat = coorditanates[0].lat; //will store the lat data by accesing the first city in api object
       var lon = coorditanates[0].lon; //will store the long data by accesing the first city in api object
       WheatherFiveDays(lat, lon);
-      localStorage.setItem(CityName, JSON.stringify(coorditanates));
+      //   localStorage.setItem(CityName, JSON.stringify(coorditanates));
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
@@ -54,7 +54,7 @@ function WheatherFiveDays(lat, lon) {
       //   var forecastDisplay = false;
       //extract whether from api, pushe in an array of nested arrays, then used to create html elements to display data in html
 
-      function forecastWheather() {
+      function forecastWheather(city) {
         var extractedWheather = [];
         // if (forecastDisplay) {
         //   return;
@@ -87,9 +87,9 @@ function WheatherFiveDays(lat, lon) {
           var nestedArray = [formatDate, humidity, temperature, windSpeed];
           extractedWheather.push(nestedArray);
         }
-
-        for (let i = 0; i < extractedWheather.length; i++) {
-          var dayData = extractedWheather[i];
+        var slicedWheather = extractedWheather.slice(1);
+        for (let i = 0; i < slicedWheather.length; i++) {
+          var dayData = slicedWheather[i];
           var div = $("<div>").addClass("card mx-3 my-3").css({
             width: "18rem",
             height: "200px",
@@ -118,7 +118,7 @@ function WheatherFiveDays(lat, lon) {
           div.append(cardBody);
           forecastFive.append(div);
         }
-        console.log(extractedWheather);
+        localStorage.setItem(city, JSON.stringify(slicedWheather));
       }
 
       forecastWheather();
@@ -182,11 +182,23 @@ function WheatherFiveDays(lat, lon) {
 //function for buttons to search arrea and created buttons saved in local storage
 
 function searchHistory() {
+  var CityName = inputSearch.val();
   var button = $("<button>")
     .addClass("btn btn-secondary  my-2")
     .css({ height: "40px", width: "250px", borderRadius: "10px" })
-    .text(inputSearch.val());
+    .text(CityName)
+    .attr("data-city", CityName);
 
   buttonHistory.append(button);
 }
+
 searchButton.on("click", searchHistory);
+
+//function to display current whether when button presed in search history
+// function displayWheather(city) {
+//   var wheatherData = JSON.parse(localStorage.getItem(city));
+//   if (wheatherData) {
+//     var currentWheather = wheatherData[0]; //gets first data from api , which is first day in dataobject
+//     todayWheather();
+//   }
+// }
