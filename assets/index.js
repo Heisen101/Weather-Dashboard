@@ -14,7 +14,7 @@ var zeroKelvin = -273.15;
 
 function LongLat(CityName) {
   // will show the city wheather
-  let coordinatesUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${CityName}&limit=5&appid=${apiKey}`;
+  let coordinatesUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${CityName}&limit=5&appid=${apiKey}`;
   console.log(coordinatesUrl);
   fetch(coordinatesUrl)
     .then((response) => response.json())
