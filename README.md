@@ -14,8 +14,8 @@ The Weather Dashboard App is a web-based application that allows users to search
 
 ## Usage
 
-1.  Open the Weather Dashboard App in a web browser.
-
+1.  Open the Weather Dashboard App in a web browser
+    [app deployed link](https://heisen101.github.io/Weather-Dashboard/)
 2.  In the search input field, enter the name of the city for which you want to retrieve weather information.
 
     ![first](./assets/first.png)
