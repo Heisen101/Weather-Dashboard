@@ -88,6 +88,8 @@ function WheatherFiveDays(lat, lon) {
           extractedWheather.push(nestedArray);
         }
         var slicedWheather = extractedWheather.slice(1);
+        var h5 = $("<h4>").css({ fontWeight: "bold", marginLeft:"20px" }).text("5-Day Forecast:");
+        forecastFive.append(h5);
         for (let i = 0; i < slicedWheather.length; i++) {
           var dayData = slicedWheather[i];
           var div = $("<div>").addClass("card mx-3 my-3").css({
@@ -118,6 +120,7 @@ function WheatherFiveDays(lat, lon) {
           div.append(cardBody);
           forecastFive.append(div);
         }
+
         localStorage.setItem(city, JSON.stringify(slicedWheather));
       }
 
@@ -193,12 +196,3 @@ function searchHistory() {
 }
 
 searchButton.on("click", searchHistory);
-
-//function to display current whether when button presed in search history
-// function displayWheather(city) {
-//   var wheatherData = JSON.parse(localStorage.getItem(city));
-//   if (wheatherData) {
-//     var currentWheather = wheatherData[0]; //gets first data from api , which is first day in dataobject
-//     todayWheather();
-//   }
-// }
